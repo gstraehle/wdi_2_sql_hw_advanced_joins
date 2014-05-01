@@ -22,7 +22,7 @@ CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
-  created_at DATE DEFAULT current_timestamp,
+  created_at DATE,
   author_id INTEGER REFERENCES users,
   category_id INTEGER REFERENCES categories
 );
@@ -35,7 +35,7 @@ CREATE INDEX ON posts (created_at);
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
   content TEXT NOT NULL,
-  created_at DATE DEFAULT current_timestamp,
+  created_at DATE,
   author_id INTEGER REFERENCES users,
   post_id INTEGER REFERENCES posts
 );
