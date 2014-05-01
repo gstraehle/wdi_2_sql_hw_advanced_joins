@@ -50,14 +50,14 @@ WITH temp (login, title, content, category, created_at) AS
   ('Owen', 'Title 8', 'Content of blog post fun stuff.', 'Music', '2014-5-1'),
   ('Mira', 'Title 9', 'Content of blog post dogs.', 'Technology', '2014-3-30'),
   ('Meghan', 'Title 10', 'Content of blog post applejacks.', 'Music', '2012-4-30'),
-  ('Carol', 'Title 11', 'Content of blog post happy people.', 'Books', '2012-2-30'),
+  ('Carol', 'Title 11', 'Content of blog post happy people.', 'Books', '2012-2-22'),
   ('Chris', 'Title 12', 'Content of blog post alphabets.', 'Music', '2011-4-29'),
   ('George', 'Title 13', 'Content of blog post so what.', 'Books', '2015-3-30'),
   ('Alan', 'Title 14', 'Content of blog post i do not know.', 'Music', '2014-1-22'),
-  ('Bryan', 'Title 15', 'Content of blog post cereals.', 'Books', '2013-2-30'),
+  ('Bryan', 'Title 15', 'Content of blog post cereals.', 'Books', '2013-2-14'),
   ('Missy', 'Title 16', 'Content of blog post fencing.', 'Music', '2010-4-30'),
   ('Dana', 'Title 17', 'Content of blog post tables that ar big.', 'Venture Capital', '2012-3-24'),
-  ('Tanya', 'Title 18', 'Content of blog post garage bands.', 'Music', '2014-2-30'),
+  ('Tanya', 'Title 18', 'Content of blog post garage bands.', 'Music', '2014-2-28'),
   ('Sue', 'Title 19', 'Content of blog post video games.', 'Books', '2013-1-30'),
   ('Mary', 'Title 20', 'Content of blog post sooo I have data here.', 'Music', '2011-2-22'),
   ('Stevie', 'Title 21', 'Content of blog post camel case.', 'Technology', '2014-4-25'),
@@ -81,9 +81,9 @@ WITH temp (login, title, content, category, created_at) AS
   ('Tanya', 'Title 39', 'Content of blog post supertroopers.', 'Music', '2009-9-19')
 )
 INSERT INTO posts
-  (author_id, title, content, category_id)
+  (author_id, title, content, category_id, created_at)
 SELECT
-  users.id, temp.title, temp.content, categories.id
+  users.id, temp.title, temp.content, categories.id, temp.created_at::date
 FROM
   users JOIN temp
     ON temp.login = users.login
@@ -100,7 +100,7 @@ WITH temp (login, title, content, created_at) AS
   ('Carol', 'Title 15', 'Random comments whatever', '2013-3-30'),
   ('Christopher', 'Title 16', 'Random comments of blog post fencing.', '2010-6-30'),
   ('Tanya', 'Title 17', 'Random comments of how goes it.', '2012-9-24'),
-  ('Sue', 'Title 18', 'Random comments of i am confused?.', '2014-2-30'),
+  ('Sue', 'Title 18', 'Random comments of i am confused?.', '2014-2-21'),
   ('George', 'Title 19', 'Random comments video games.', '2013-8-30'),
   ('Alex', 'Title 12', 'Random comments of blog post sooo I have data here.','2012-2-22'),
   ('Bryan', 'Title 21', 'Random comments of blog post camel case is better.', '2014-5-25'),
@@ -123,9 +123,9 @@ WITH temp (login, title, content, created_at) AS
   ('George', 'Title 38', 'Random comments of blog post and on and on goes boom.', '2014-11-19')
 )
 INSERT INTO comments
-  (author_id, post_id, content)
+  (author_id, post_id, content, created_at)
 SELECT
-  users.id, posts.id, temp.content
+  users.id, posts.id, temp.content, temp.created_at::date
 FROM
   users JOIN temp
     ON temp.login = users.login

@@ -1,5 +1,9 @@
+\c blog
 -- 1. How many comments has each user made per category?
-
+SELECT * FROM categories;
+SELECT * FROM users;
+SELECT * FROM posts;
+SELECT * FROM comments;
 
 -- 2. Get a listing of all posts grouped by year.
 
