@@ -1,9 +1,40 @@
 \c blog
+-- SELECT * FROM categories LIMIT 5;
+-- SELECT * FROM users LIMIT 5;
+-- SELECT * FROM posts LIMIT 5;
+-- SELECT * FROM comments LIMIT 5;
+
 -- 1. How many comments has each user made per category?
-SELECT * FROM categories;
-SELECT * FROM users;
-SELECT * FROM posts;
-SELECT * FROM comments;
+-- select * from users;
+
+-- SELECT comments.author_id, categories.name, count(comments.content)
+--   FROM users
+--     FULL OUTER JOIN posts
+--       ON users.id = posts.author_id
+--     FULL OUTER JOIN comments
+--       ON posts.id = comments.post_id
+--     FULL OUTER JOIN categories
+--       ON posts.category_id = categories.id
+--         GROUP BY comments.author_id, categories.name
+--           ORDER BY comments.author_id
+--           ;
+
+  SELECT *
+  FROM users
+    FULL OUTER JOIN posts
+      ON users.id = posts.author_id
+    FULL OUTER JOIN comments
+      ON posts.id = comments.post_id
+    FULL OUTER JOIN categories
+      ON posts.category_id = categories.id
+    FULL OUTER JOIN users AS users2
+      on comments.author_id = users2.id
+          ORDER BY users.login
+          ;
+
+-- SELECT *
+--     FROM users, posts
+--     WHERE users.id = posts.author_id;
 
 -- 2. Get a listing of all posts grouped by year.
 
