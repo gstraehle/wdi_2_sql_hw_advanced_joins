@@ -4,11 +4,25 @@
 -- SELECT * FROM posts LIMIT 5;
 -- SELECT * FROM comments LIMIT 5;
 
+  -- SELECT users.login, users.created_at, posts.title, posts.content as post_content, posts.created_at as post_date, categories.name as category_name, users2.login as commenter, comments.content as comment_content, comments.created_at as comment_date
+  -- FROM users
+  --   FULL OUTER JOIN posts
+  --     ON users.id = posts.author_id
+  --   FULL OUTER JOIN comments
+  --     ON posts.id = comments.post_id
+  --   FULL OUTER JOIN categories
+  --     ON posts.category_id = categories.id
+  --   LEFT OUTER JOIN users AS users2
+  --     on comments.author_id = users2.id
+  --         ORDER BY users.login;
+
+
+
+
 -- 1. How many comments has each user made per category?
--- select * from users;
 
 
-  SELECT users.login, users.created_at, posts.title, posts.content as post_content, posts.created_at as post_date, categories.name as category_name, users2.login as commenter, comments.content as comment_content, comments.created_at as comment_date
+  SELECT users2.login as commenter, categories.name as category_name, count (users2.login)
   FROM users
     FULL OUTER JOIN posts
       ON users.id = posts.author_id
@@ -16,10 +30,12 @@
       ON posts.id = comments.post_id
     FULL OUTER JOIN categories
       ON posts.category_id = categories.id
-    LEFT OUTER JOIN users AS users2
+    LEFT OUTER JOIN users AS users2 -- needed an alias
       on comments.author_id = users2.id
-          ORDER BY users.login
-          ;
+          WHERE users2.login <> ''
+            GROUP BY commenter, category_name
+              ORDER BY users2.login;
+
 
 -- SELECT *
 --     FROM users, posts
