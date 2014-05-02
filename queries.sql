@@ -22,7 +22,38 @@
 -- 1. How many comments has each user made per category?
 
 
-  SELECT users2.login as commenter, categories.name as category_name, count (users2.login)
+  -- SELECT users2.login as commenter, categories.name as category_name, count (users2.login)
+  -- FROM users
+  --   FULL OUTER JOIN posts
+  --     ON users.id = posts.author_id
+  --   FULL OUTER JOIN comments
+  --     ON posts.id = comments.post_id
+  --   FULL OUTER JOIN categories
+  --     ON posts.category_id = categories.id
+  --   LEFT OUTER JOIN users AS users2 -- needed an alias
+  --     on comments.author_id = users2.id
+  --         WHERE users2.login <> ''
+  --           GROUP BY commenter, category_name
+  --             ORDER BY users2.login;
+
+
+
+
+-- 2. Get a listing of all posts grouped by year.
+  -- SELECT EXTRACT(year from posts.created_at::date), posts.content AS post_content, users.login AS poster
+  -- FROM users
+  --   FULL OUTER JOIN posts
+  --     ON users.id = posts.author_id
+  --   FULL OUTER JOIN comments
+  --     ON posts.id = comments.post_id
+  --   FULL OUTER JOIN categories
+  --     ON posts.category_id = categories.id
+  --   LEFT OUTER JOIN users AS users2
+  --     on comments.author_id = users2.id
+  --         ORDER BY posts.created_at::date;
+
+-- 3. How many comments does each user have across all of their posts?
+  SELECT users.login, count(comments.content) as total_comments_on_all_posts
   FROM users
     FULL OUTER JOIN posts
       ON users.id = posts.author_id
@@ -30,22 +61,10 @@
       ON posts.id = comments.post_id
     FULL OUTER JOIN categories
       ON posts.category_id = categories.id
-    LEFT OUTER JOIN users AS users2 -- needed an alias
+    LEFT OUTER JOIN users AS users2
       on comments.author_id = users2.id
-          WHERE users2.login <> ''
-            GROUP BY commenter, category_name
-              ORDER BY users2.login;
-
-
--- SELECT *
---     FROM users, posts
---     WHERE users.id = posts.author_id;
-
--- 2. Get a listing of all posts grouped by year.
-
-
--- 3. How many comments does each user have across all of their posts?
-
+          GROUP BY users.login
+          ORDER BY users.login;
 
 -- 4. Which posts contain a specific keyword?
 
