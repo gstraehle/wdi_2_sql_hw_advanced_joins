@@ -40,7 +40,7 @@
 
 
 -- 2. Get a listing of all posts grouped by year.
-  -- SELECT EXTRACT(year from posts.created_at::date), posts.content AS post_content, users.login AS poster
+  -- SELECT DISTINCT posts.id, EXTRACT(year from posts.created_at::date) as year, posts.content AS post_content, users.login AS poster
   -- FROM users
   --   FULL OUTER JOIN posts
   --     ON users.id = posts.author_id
@@ -50,24 +50,35 @@
   --     ON posts.category_id = categories.id
   --   LEFT OUTER JOIN users AS users2
   --     on comments.author_id = users2.id
-  --         ORDER BY posts.created_at::date;
+  --         ORDER BY year;
 
 -- 3. How many comments does each user have across all of their posts?
-  SELECT users.login, count(comments.content) as total_comments_on_all_posts
-  FROM users
-    FULL OUTER JOIN posts
-      ON users.id = posts.author_id
-    FULL OUTER JOIN comments
-      ON posts.id = comments.post_id
-    FULL OUTER JOIN categories
-      ON posts.category_id = categories.id
-    LEFT OUTER JOIN users AS users2
-      on comments.author_id = users2.id
-          GROUP BY users.login
-          ORDER BY users.login;
+  -- SELECT users.login, count(comments.content) as total_comments_on_all_posts
+  -- FROM users
+  --   FULL OUTER JOIN posts
+  --     ON users.id = posts.author_id
+  --   FULL OUTER JOIN comments
+  --     ON posts.id = comments.post_id
+  --   FULL OUTER JOIN categories
+  --     ON posts.category_id = categories.id
+  --   LEFT OUTER JOIN users AS users2
+  --     on comments.author_id = users2.id
+  --         GROUP BY users.login
+  --         ORDER BY users.login;
 
 -- 4. Which posts contain a specific keyword?
-
+  -- SELECT DISTINCT users.login, posts.title, posts.content as post_content, posts.created_at as post_date -- will repeat for every comment otherwise
+  -- FROM users
+  --   FULL OUTER JOIN posts
+  --     ON users.id = posts.author_id
+  --   FULL OUTER JOIN comments
+  --     ON posts.id = comments.post_id
+  --   FULL OUTER JOIN categories
+  --     ON posts.category_id = categories.id
+  --   LEFT OUTER JOIN users AS users2
+  --     on comments.author_id = users2.id
+  --       WHERE posts.content like '%about%'
+  --           ORDER BY users.login;
 
 -- 5. Which category of post has each user made the most comments on?
 
