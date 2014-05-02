@@ -81,6 +81,21 @@
   --           ORDER BY users.login;
 
 -- 5. Which category of post has each user made the most comments on?
+-- DISTINCT ON is the postgres method
+  SELECT DISTINCT ON (users2.login) users2.login as commenter, categories.name as category_name, COUNT(categories.name) AS count
+  FROM users
+    FULL OUTER JOIN posts
+      ON users.id = posts.author_id
+    FULL OUTER JOIN comments
+      ON posts.id = comments.post_id
+    FULL OUTER JOIN categories
+      ON posts.category_id = categories.id
+    LEFT OUTER JOIN users AS users2
+      on comments.author_id = users2.id
+        WHERE users2.login <> ''
+          GROUP BY users2.login, categories.name
+            ORDER BY users2.login, count(categories.name)DESC
+
 
 
 -- 6. Get a specific user's posts sorted by date of most recent comment.
