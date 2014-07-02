@@ -1,6 +1,5 @@
 # Postgres-a-palooza
-
-Using the included schema and starter data (you may need to create more data to properly test these queries), write SQL queries that will perform tasks or answer questions as follows:
+Used PostgreSQL and starter seed date to answer the following ...
 
 1. How many comments has each user made per category?
 2. Get a listing of all posts grouped by year.
@@ -12,7 +11,3 @@ Using the included schema and starter data (you may need to create more data to 
 8. Get the top 5 most-commented-on posts that were created in the last 7 days.
 9. Get the top 5 wordiest posts (just by character count &ndash; don't actually count words).
 10. Get all posts sorted by longest-running comment thread (time between first and last comments).
-
-## Grading
-
-Each query listed above is worth 1 point, for a total of 10 points.
